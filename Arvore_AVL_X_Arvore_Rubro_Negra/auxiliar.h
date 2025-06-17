@@ -1,0 +1,6 @@
+#ifndef AUXILIAR_H_INCLUDED
+#define AUXILIAR_H_INCLUDED
+
+
+
+#endif // AUXILIAR_H_INCLUDED
