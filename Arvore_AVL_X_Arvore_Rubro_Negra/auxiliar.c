@@ -8,6 +8,7 @@
 struct funcionario{
 	int id;
 	char nome[100];
+    char empresa[100];
 	int idade;
 	char dpto[100];
 	float sal;
@@ -88,6 +89,10 @@ int alimenta_arvore(int arvore) {
     char linha[256]; 
     fgets(linha, sizeof(linha), arquivo);
 
+        if (!fopen("funcionarios_ordenados.csv", "r")) {
+        return 0;
+    }
+
     Funcionario *vetor = NULL;
     int tamanho = 0;
    
@@ -95,6 +100,7 @@ int alimenta_arvore(int arvore) {
 
 		 func.id = atoi(strtok(linha, ";"));
 		 strcpy(func.nome, strtok(NULL, ";"));
+         strcpy(func.empresa, strtok(NULL, ";"));
 		 func.idade = atoi(strtok(NULL, ";"));
 		 strcpy(func.dpto, strtok(NULL, ";"));
 		 func.sal = atof(strtok(NULL, "\n"));;
@@ -107,37 +113,62 @@ int alimenta_arvore(int arvore) {
             } else {
                 printf("Erro ao inserir funcionario %s na arvore AVL.\n", func.nome);
             }
+
+        if (fopen("funcionarios_ordenados.csv", "r")) {
+            return 0;
+        }
+
+            vetor = realloc(vetor, (tamanho + 1) * sizeof(Funcionario));
+            if (vetor == NULL) {
+                printf("Erro ao alocar memória para vetor auxiliar.\n");
+                fclose(arquivo);
+                return 1;
+            }
+            vetor[tamanho] = func; 
+            tamanho++;
+
             break;
 
             case 2:
+
             if (insere_arvore_Rubro_Negra(func) == 0) {
                 printf("Funcionario %s inserido na arvore Rubro-Negra.\n", func.nome);
             } else {
                 printf("Erro ao inserir funcionario %s na arvore Rubro-Negra.\n", func.nome);
             }
-         
+            
+           
+        if (fopen("funcionarios_ordenados.csv", "r")) {
+            return 0;
+        }
+
+            vetor = realloc(vetor, (tamanho + 1) * sizeof(Funcionario));
+            if (vetor == NULL) {
+                printf("Erro ao alocar memória para vetor auxiliar.\n");
+                fclose(arquivo);
+                return 1;
+            }
+            vetor[tamanho] = func; 
+            tamanho++;
+
          default:
             break;
          }
 
                 
-        vetor = realloc(vetor, (tamanho + 1) * sizeof(Funcionario));
-        if (vetor == NULL) {
-            printf("Erro ao alocar memória para vetor auxiliar.\n");
-            fclose(arquivo);
-            return 1;
-        }
-        vetor[tamanho] = func; 
-        tamanho++;
     }
 
     fclose(arquivo);
-    printf("Total de funcionarios no vetor: %d\n", tamanho);
+
+    if (fopen("funcionarios_ordenados.csv", "r")) {
+        return 0;
+    }
 
     quicksort(vetor, 0, tamanho - 1);
 
     criar_csv_ordenado("funcionarios_ordenados.csv", vetor, tamanho);
     free(vetor);
+
 
     return 0;
 }
