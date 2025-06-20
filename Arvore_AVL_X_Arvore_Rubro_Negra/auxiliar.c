@@ -75,7 +75,7 @@ void quickSort(Funcionario arr[], int low, int high)
  depois dessa arvore ele vai mandar o vetor para o algoritimo de ordenação que vai ordenar o vetor
   e depois vamos mandar para a função de criar arquivo csv.
 */
-int alimenta_arvore(char arvore, int ordena) {
+int alimenta_arvore(int arvore) {
 
     FILE *arquivo = fopen("massaDados.csv", "r");
 
@@ -101,7 +101,7 @@ int alimenta_arvore(char arvore, int ordena) {
 
          switch (arvore)
          {
-         case 'arvore_AVL':
+         case 1:
             if (insere_arvore_AVL(func) == 0) {
                 printf("Funcionario %s inserido na arvore AVL.\n", func.nome);
             } else {
@@ -109,7 +109,7 @@ int alimenta_arvore(char arvore, int ordena) {
             }
             break;
 
-            case 'arvore_Rubro_Negra':
+            case 2:
             if (insere_arvore_Rubro_Negra(func) == 0) {
                 printf("Funcionario %s inserido na arvore Rubro-Negra.\n", func.nome);
             } else {
@@ -134,7 +134,12 @@ int alimenta_arvore(char arvore, int ordena) {
     fclose(arquivo);
     printf("Total de funcionarios no vetor: %d\n", tamanho);
 
-    
+    quicksort(vetor, 0, tamanho - 1);
+
+    criar_csv_ordenado("funcionarios_ordenados.csv", vetor, tamanho);
+    free(vetor);
 
     return 0;
 }
+
+//todo: preciso fazer a logica dele criar o arquivo csv com os dados ordenados apenas uma vez,
