@@ -76,22 +76,26 @@ void quickSort(Funcionario arr[], int low, int high)
  depois dessa arvore ele vai mandar o vetor para o algoritimo de ordenação que vai ordenar o vetor
   e depois vamos mandar para a função de criar arquivo csv.
 */
-int alimenta_arvore(int arvore) {
+int alimenta_arvore(int arvore, char *nome_arquivo) {
 
-    FILE *arquivo = fopen("massaDados.csv", "r");
+    FILE *arquivo = fopen(nome_arquivo, "r");
 
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo\n");
         return 1;
     }
+
+    int arquivo_ordenado_existe = 0;
+    FILE *teste = fopen("funcionarios_ordenados.csv", "r");
+    if (teste != NULL) {
+        arquivo_ordenado_existe = 1;
+        fclose(teste);
+    }
+
     Funcionario func;
 
     char linha[256]; 
     fgets(linha, sizeof(linha), arquivo);
-
-        if (!fopen("funcionarios_ordenados.csv", "r")) {
-        return 0;
-    }
 
     Funcionario *vetor = NULL;
     int tamanho = 0;
@@ -114,19 +118,6 @@ int alimenta_arvore(int arvore) {
                 printf("Erro ao inserir funcionario %s na arvore AVL.\n", func.nome);
             }
 
-        if (fopen("funcionarios_ordenados.csv", "r")) {
-            return 0;
-        }
-
-            vetor = realloc(vetor, (tamanho + 1) * sizeof(Funcionario));
-            if (vetor == NULL) {
-                printf("Erro ao alocar memória para vetor auxiliar.\n");
-                fclose(arquivo);
-                return 1;
-            }
-            vetor[tamanho] = func; 
-            tamanho++;
-
             break;
 
             case 2:
@@ -136,41 +127,36 @@ int alimenta_arvore(int arvore) {
             } else {
                 printf("Erro ao inserir funcionario %s na arvore Rubro-Negra.\n", func.nome);
             }
-            
-           
-        if (fopen("funcionarios_ordenados.csv", "r")) {
-            return 0;
-        }
+            break;
 
+         default:
+            break;
+         }
+
+        if (!arquivo_ordenado_existe) {
             vetor = realloc(vetor, (tamanho + 1) * sizeof(Funcionario));
             if (vetor == NULL) {
                 printf("Erro ao alocar memória para vetor auxiliar.\n");
                 fclose(arquivo);
                 return 1;
             }
-            vetor[tamanho] = func; 
+            vetor[tamanho] = func;
             tamanho++;
-
-         default:
-            break;
-         }
-
+        }
                 
     }
 
     fclose(arquivo);
 
-    if (fopen("funcionarios_ordenados.csv", "r")) {
-        return 0;
+    if (!arquivo_ordenado_existe) {
+        quickSort(vetor, 0, tamanho - 1);
+        criar_csv_ordenado("funcionarios_ordenados.csv", vetor, tamanho);
+        free(vetor);
+        alimenta_arvore(arvore, "funcionarios_ordenados.csv");
     }
 
-    quicksort(vetor, 0, tamanho - 1);
-
-    criar_csv_ordenado("funcionarios_ordenados.csv", vetor, tamanho);
     free(vetor);
-
 
     return 0;
 }
 
-//todo: preciso fazer a logica dele criar o arquivo csv com os dados ordenados apenas uma vez,
