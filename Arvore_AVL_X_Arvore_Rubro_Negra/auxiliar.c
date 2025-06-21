@@ -137,7 +137,6 @@ int alimenta_arvore(int arvore, char *nome_arquivo) {
             vetor = realloc(vetor, (tamanho + 1) * sizeof(Funcionario));
             if (vetor == NULL) {
                 printf("Erro ao alocar memória para vetor auxiliar.\n");
-                fclose(arquivo);
                 return 1;
             }
             vetor[tamanho] = func;
