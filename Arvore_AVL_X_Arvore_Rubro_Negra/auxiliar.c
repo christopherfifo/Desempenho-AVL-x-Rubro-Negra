@@ -91,12 +91,6 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
         return 1;
     }
 
-    if(arvore == ARVORE_AVL){
-        arvAVL *cria_arvAVL();
-    } else if(arvore == ARVORE_RUBRO_NEGRA) { 
-        arvoreLLRB *raiz = cria_arvoreLLRB();
-    }
-
     int arquivo_ordenado_existe = (arvore == CRIANDO_ARVORE) ? 0 : 1;
 
     if (contadorAVL > 2) {
@@ -123,21 +117,31 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
         return 1;
     }
 
-    gettimeofday(&inicio, NULL);
-    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-
-		 func.id = atoi(strtok(linha, ";"));
-		 strcpy(func.nome, strtok(NULL, ";"));
-		 func.idade = atoi(strtok(NULL, ";"));
-         strcpy(func.empresa, strtok(NULL, ";"));
-		 strcpy(func.dpto, strtok(NULL, ";"));
-		 func.sal = atof(strtok(NULL, "\n"));
-
          switch (arvore)
          {
          case ARVORE_AVL:
-                if (insere_arvore_AVL(func) == 0) {
-                    printf("Funcionario %s inserido na arvore AVL.\n", func.nome);
+
+                arvAVL *raiz = cria_arvAVL();
+
+                gettimeofday(&inicio, NULL);
+                while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+
+                    func.id = atoi(strtok(linha, ";"));
+                    strcpy(func.nome, strtok(NULL, ";"));
+                    func.idade = atoi(strtok(NULL, ";"));
+                    strcpy(func.empresa, strtok(NULL, ";"));
+                    strcpy(func.dpto, strtok(NULL, ";"));
+                    func.sal = atof(strtok(NULL, "\n"));
+                }
+                if (insere_arvAVL(raiz,func) == 0) {
+
+                    gettimeofday(&fim, NULL);
+                    double tempo = calculaTempo(inicio, fim);
+                    printf("Tempo gasto para inserir na arvore: %.6f segundos\n", tempo);
+
+                    TempoAVL[contadorAVL] = tempo;
+                    contadorAVL++;
+
                 } else {
                     printf("Erro ao inserir funcionario %s na arvore AVL.\n", func.nome);
                 }
@@ -146,14 +150,42 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
             case ARVORE_RUBRO_NEGRA:
 
-                if (insere_arvore_Rubro_Negra(func) == 0) {
-                    printf("Funcionario %s inserido na arvore Rubro-Negra.\n", func.nome);
+                arvoreLLRB *raiz = cria_arvoreLLRB();
+
+                gettimeofday(&inicio, NULL);
+                while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+
+                    func.id = atoi(strtok(linha, ";"));
+                    strcpy(func.nome, strtok(NULL, ";"));
+                    func.idade = atoi(strtok(NULL, ";"));
+                    strcpy(func.empresa, strtok(NULL, ";"));
+                    strcpy(func.dpto, strtok(NULL, ";"));
+                    func.sal = atof(strtok(NULL, "\n"));
+                }
+
+                if (insere_arvoreLLRB(raiz,func) == 0) {
+                   
+                    gettimeofday(&fim, NULL);
+                    double tempo = calculaTempo(inicio, fim);
+                    printf("Tempo gasto para inserir na arvore: %.6f segundos\n", tempo);
+
+                    TempoRubroNegra[contadorRubroNegra] = tempo;
+                    contadorRubroNegra++;
+
                 } else {
                     printf("Erro ao inserir funcionario %s na arvore Rubro-Negra.\n", func.nome);
                 }
             break;
 
             case CRIANDO_ARVORE:
+                while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+
+                    func.id = atoi(strtok(linha, ";"));
+                    strcpy(func.nome, strtok(NULL, ";"));
+                    func.idade = atoi(strtok(NULL, ";"));
+                    strcpy(func.empresa, strtok(NULL, ";"));
+                    strcpy(func.dpto, strtok(NULL, ";"));
+                    func.sal = atof(strtok(NULL, "\n"));
 
                 if (tamanho == capacidade) {
                     int nova_capacidade = capacidade * 2;
@@ -170,25 +202,13 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
                 vetor[tamanho] = func;
                 tamanho++;
+                }
+ 
             break;
 
          default:
             break;
          }
-
-    }
-
-    gettimeofday(&fim, NULL);
-    double tempo = calculaTempo(inicio, fim);
-    printf("Tempo gasto para inserir na arvore: %.6f segundos\n", tempo);
-
-    if (arvore == ARVORE_AVL) {
-        TempoAVL[contadorAVL] = tempo;
-        contadorAVL++;
-    } else if (arvore == ARVORE_RUBRO_NEGRA) {
-        TempoRubroNegra[contadorRubroNegra] = tempo;
-        contadorRubroNegra++;
-    }
 
     fclose(arquivo);
 
