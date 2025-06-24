@@ -1,18 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <auxiliar.h>
-#include <arvore_AVL.h>
-#include <arvore_Rubro_Negra.h>
+#include <sys/time.h>
+#include "auxiliar.h"
+#include "arvore_AVL.h"
+#include "arvore_Rubro_Negra.h"
 
-struct funcionario{
-	int id;
-	char nome[100];
-    char empresa[100];
-	int idade;
-	char dpto[100];
-	float sal;
-};
+
+
+double TempoAVL[5];
+double TempoRubroNegra[5];
+struct timeval inicio, fim;
 
 void criar_csv_ordenado( char nome_arquivo_saida, Funcionario* vetor, int tamanho){
     FILE *arquivo = fopen(nome_arquivo_saida, "w");
@@ -64,15 +62,22 @@ void quickSort(Funcionario arr[], int low, int high)
 {
     if (low < high)
     {
-        int pi = divisao(arr, low, high); 
+        int pi = divisao(arr, low, high);
 
-        quickSort(arr, low, pi - 1);  
-        quickSort(arr, pi + 1, high); 
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
     }
 }
 
+double calculaTempo(struct timeval tempoInicial, struct timeval tempoFinal)
+{
+    double inicio = tempoInicial.tv_sec + tempoInicial.tv_usec / 1000000.0;
+    double fim = tempoFinal.tv_sec + tempoFinal.tv_usec / 1000000.0;
+    return fim - inicio;
+}
+
 /* aqui ele vai ler o arquivo, mandar para a função token que vai mandar para a struct
- que ela vai mandar essa struct para a arvore e depois para um vetor, 
+ que ela vai mandar essa struct para a arvore e depois para um vetor,
  depois dessa arvore ele vai mandar o vetor para o algoritimo de ordenação que vai ordenar o vetor
   e depois vamos mandar para a função de criar arquivo csv.
 */
@@ -82,24 +87,30 @@ int alimenta_arvore(int arvore, char *nome_arquivo) {
 
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo\n");
+        fclose(arquivo);
         return 1;
     }
 
-    int arquivo_ordenado_existe = 0;
-    FILE *teste = fopen("funcionarios_ordenados.csv", "r");
-    if (teste != NULL) {
-        arquivo_ordenado_existe = 1;
-        fclose(teste);
-    }
+    int arquivo_ordenado_existe = (arvore == CRIANDO_ARVORE) ? 0 : 1;
 
     Funcionario func;
 
-    char linha[256]; 
+    char linha[256];
     fgets(linha, sizeof(linha), arquivo);
 
     Funcionario *vetor = NULL;
+
     int tamanho = 0;
-   
+    int capacidade = 1000;
+
+    vetor = malloc(capacidade * sizeof(Funcionario));
+    if (vetor == NULL) {
+        printf("Erro ao alocar memória inicial para o vetor.\n");
+        fclose(arquivo);
+        return 1;
+    }
+
+    gettimeofday(&inicio, NULL);
     while (fgets(linha, sizeof(linha), arquivo) != NULL) {
 
 		 func.id = atoi(strtok(linha, ";"));
@@ -111,47 +122,56 @@ int alimenta_arvore(int arvore, char *nome_arquivo) {
 
          switch (arvore)
          {
-         case 1:
-            if (insere_arvore_AVL(func) == 0) {
-                printf("Funcionario %s inserido na arvore AVL.\n", func.nome);
-            } else {
-                printf("Erro ao inserir funcionario %s na arvore AVL.\n", func.nome);
-            }
+         case ARVORE_AVL:
+                if (insere_arvore_AVL(func) == 0) {
+                    printf("Funcionario %s inserido na arvore AVL.\n", func.nome);
+                } else {
+                    printf("Erro ao inserir funcionario %s na arvore AVL.\n", func.nome);
+                }
 
             break;
 
-            case 2:
+            case ARVORE_RUBRO_NEGRA:
 
-            if (insere_arvore_Rubro_Negra(func) == 0) {
-                printf("Funcionario %s inserido na arvore Rubro-Negra.\n", func.nome);
-            } else {
-                printf("Erro ao inserir funcionario %s na arvore Rubro-Negra.\n", func.nome);
-            }
+                if (insere_arvore_Rubro_Negra(func) == 0) {
+                    printf("Funcionario %s inserido na arvore Rubro-Negra.\n", func.nome);
+                } else {
+                    printf("Erro ao inserir funcionario %s na arvore Rubro-Negra.\n", func.nome);
+                }
             break;
+
+            case CRIANDO_ARVORE:
+                printf("\n Estamos criando o vetor ordenado!\n");
+
+                if (tamanho == capacidade) {
+                    int nova_capacidade = capacidade * 2;
+                    Funcionario *temp = realloc(vetor, nova_capacidade * sizeof(Funcionario));
+                    if (temp == NULL) {
+                        printf("Erro ao realocar memória para o vetor.\n");
+                        free(vetor);
+                        fclose(arquivo);
+                        return 1;
+                    }
+                    vetor = temp;
+                    capacidade = nova_capacidade;
+                }
+
+                vetor[tamanho] = func;
+                tamanho++;
 
          default:
             break;
          }
 
-        if (!arquivo_ordenado_existe) {
-            vetor = realloc(vetor, (tamanho + 1) * sizeof(Funcionario));
-            if (vetor == NULL) {
-                printf("Erro ao alocar memória para vetor auxiliar.\n");
-                return 1;
-            }
-            vetor[tamanho] = func;
-            tamanho++;
-        }
-                
     }
+
+    gettimeofday(&fim, NULL);
 
     fclose(arquivo);
 
     if (!arquivo_ordenado_existe) {
         quickSort(vetor, 0, tamanho - 1);
         criar_csv_ordenado("funcionarios_ordenados.csv", vetor, tamanho);
-        free(vetor);
-        alimenta_arvore(arvore, "funcionarios_ordenados.csv");
     }
 
     free(vetor);

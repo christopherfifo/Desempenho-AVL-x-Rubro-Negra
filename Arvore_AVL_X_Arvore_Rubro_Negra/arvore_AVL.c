@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <auxiliar.h>
-#include <arvore_AVL.h>
-#include <arvore_Rubro_Negra.h>
+#include <sys/time.h>
+#include "auxiliar.h"
+#include "arvore_AVL.h"
 
 typedef struct NO{
     int info;
@@ -48,7 +48,7 @@ int altura_arvAVL(arvAVL *raiz){
 
 int insere_arvAVL(arvAVL *raiz, int valor){
     int res;
-    
+
     if(*raiz == NULL){
         struct NO *novo = (struct NO*) malloc(sizeof(struct NO));
         if(novo == NULL){
@@ -86,7 +86,7 @@ int insere_arvAVL(arvAVL *raiz, int valor){
             }
         }else{
             printf("Elemento %d já existe na arvore. Insercao duplicada!\n", valor);
-            return 0; 
+            return 0;
         }
     }
     atual->alt = maior(alt_no(atual->esq), alt_no(atual->dir)) + 1;
@@ -145,7 +145,7 @@ int remove_arvAVL(arvAVL *raiz, int valor){
     if(raiz == NULL){
         return 0;
     }
-    
+
     int res;
     if(valor < (*raiz)->info){
         if((res = remove_arvAVL(&(*raiz)->esq, valor)) == 1){
@@ -157,8 +157,8 @@ int remove_arvAVL(arvAVL *raiz, int valor){
                 }
             }
         }
-    } 
-    
+    }
+
     if((*raiz)->info < valor){
         if((res = remove_arvAVL(&(*raiz)->dir, valor)) == 1){
             if(fatorBalanceamento_NO(*raiz) >= 2){
