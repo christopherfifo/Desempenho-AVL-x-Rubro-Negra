@@ -9,7 +9,7 @@ typedef struct funcionario{
 
 void quickSort(Funcionario arr[], int low, int high);
 
-void criar_csv_ordenado( char nome_arquivo_saida, Funcionario* vetor, int tamanho);
+void criar_csv_ordenado( const char *nome_arquivo_saida, Funcionario* vetor, int tamanho);
 
 double calculaTempo(struct timeval tempoInicial, struct timeval tempoFinal);
 

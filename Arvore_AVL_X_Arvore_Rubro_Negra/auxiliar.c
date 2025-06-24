@@ -6,15 +6,13 @@
 #include "arvore_AVL.h"
 #include "arvore_Rubro_Negra.h"
 
-
-
 double TempoAVL[2];
 double TempoRubroNegra[2];
 struct timeval inicio, fim;
 int contadorAVL = 0;
 int contadorRubroNegra = 0;
 
-void criar_csv_ordenado( char nome_arquivo_saida, Funcionario* vetor, int tamanho){
+void criar_csv_ordenado( const char *nome_arquivo_saida, Funcionario* vetor, int tamanho){
     FILE *arquivo = fopen(nome_arquivo_saida, "w");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo\n");
@@ -24,7 +22,7 @@ void criar_csv_ordenado( char nome_arquivo_saida, Funcionario* vetor, int tamanh
     fprintf(arquivo, "Id;Nome;Idade;Empresa;Departamento;Salario\n");
 
     for (int i = 0; i < tamanho; i++) {
-        fprintf(arquivo, "%d;%s;%s;%d;%s;%.2f\n", vetor[i].id, vetor[i].nome, vetor[i].empresa, vetor[i].idade, vetor[i].dpto, vetor[i].sal);
+        fprintf(arquivo, "%d;%s;%d;%s;%s;%.2f\n", vetor[i].id, vetor[i].nome, vetor[i].idade, vetor[i].empresa, vetor[i].dpto, vetor[i].sal);
     }
 
     fclose(arquivo);
@@ -53,7 +51,7 @@ int divisao(Funcionario arr[], int low, int high)
     for (int j = low; j < high; j++) {
         if (arr[j].id <= pivot.id) {
             i++;
-            swap(&arr[i], &arr[j]);
+            troca(&arr[i], &arr[j]);
         }
     }
     troca(&arr[i + 1], &arr[high]);
@@ -124,8 +122,8 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
 		 func.id = atoi(strtok(linha, ";"));
 		 strcpy(func.nome, strtok(NULL, ";"));
-         strcpy(func.empresa, strtok(NULL, ";"));
 		 func.idade = atoi(strtok(NULL, ";"));
+         strcpy(func.empresa, strtok(NULL, ";"));
 		 strcpy(func.dpto, strtok(NULL, ";"));
 		 func.sal = atof(strtok(NULL, "\n"));;
 
