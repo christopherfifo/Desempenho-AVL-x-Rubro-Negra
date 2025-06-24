@@ -91,6 +91,12 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
         return 1;
     }
 
+    if(arvore == ARVORE_AVL){
+        arvAVL *cria_arvAVL();
+    } else if(arvore == ARVORE_RUBRO_NEGRA) { 
+        arvoreLLRB *raiz = cria_arvoreLLRB();
+    }
+
     int arquivo_ordenado_existe = (arvore == CRIANDO_ARVORE) ? 0 : 1;
 
     if (contadorAVL > 2) {
@@ -125,7 +131,7 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 		 func.idade = atoi(strtok(NULL, ";"));
          strcpy(func.empresa, strtok(NULL, ";"));
 		 strcpy(func.dpto, strtok(NULL, ";"));
-		 func.sal = atof(strtok(NULL, "\n"));;
+		 func.sal = atof(strtok(NULL, "\n"));
 
          switch (arvore)
          {
