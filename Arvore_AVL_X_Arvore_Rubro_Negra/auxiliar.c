@@ -21,10 +21,10 @@ void criar_csv_ordenado( char nome_arquivo_saida, Funcionario* vetor, int tamanh
         exit(1);
     }
 
-    fprintf(arquivo, "p;Nome;Idade;Empresa;Departamento;Salario\n");
+    fprintf(arquivo, "Id;Nome;Idade;Empresa;Departamento;Salario\n");
 
     for (int i = 0; i < tamanho; i++) {
-        fprintf(arquivo, "%d;%s;%d;%s;%.2f\n", vetor[i].id, vetor[i].nome, vetor[i].idade, vetor[i].dpto, vetor[i].sal);
+        fprintf(arquivo, "%d;%s;%s;%d;%s;%.2f\n", vetor[i].id, vetor[i].nome, vetor[i].empresa, vetor[i].idade, vetor[i].dpto, vetor[i].sal);
     }
 
     fclose(arquivo);
@@ -166,6 +166,7 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
                 vetor[tamanho] = func;
                 tamanho++;
+            break;
 
          default:
             break;
