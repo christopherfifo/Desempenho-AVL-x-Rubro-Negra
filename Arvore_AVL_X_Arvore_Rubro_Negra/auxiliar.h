@@ -13,6 +13,8 @@ void criar_csv_ordenado( char nome_arquivo_saida, Funcionario* vetor, int tamanh
 
 double calculaTempo(struct timeval tempoInicial, struct timeval tempoFinal);
 
+void exibeTempos();
+
 typedef enum {
     ARVORE_AVL, ARVORE_RUBRO_NEGRA, CRIANDO_ARVORE
 } SELECAO;

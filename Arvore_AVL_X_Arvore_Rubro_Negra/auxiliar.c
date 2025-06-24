@@ -8,8 +8,8 @@
 
 
 
-double TempoAVL[4];
-double TempoRubroNegra[4];
+double TempoAVL[2];
+double TempoRubroNegra[2];
 struct timeval inicio, fim;
 int contadorAVL = 0;
 int contadorRubroNegra = 0;
@@ -95,10 +95,10 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
     int arquivo_ordenado_existe = (arvore == CRIANDO_ARVORE) ? 0 : 1;
 
-    if (contadorAVL > 4) {
+    if (contadorAVL > 2) {
         contadorAVL = 0;
     }
-    if (contadorRubroNegra > 4) {
+    if (contadorRubroNegra > 2) {
         contadorRubroNegra = 0;
     }
 
@@ -196,9 +196,21 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
     free(vetor);
 
     if(arquivo_ordenado == 1){
-    alimenta_arvore(arvore, "FuncionariosOrdenados.csv", 1);
+    alimenta_arvore(arvore, "FuncionariosOrdenados.csv", 0);
     }
 
     return 0;
 }
 
+void exibeTempos() {
+    
+    printf("Tempos para Arvore AVL:\n");
+    for (int i = 0; i < contadorAVL; i++) {
+        (i == 0) ? printf("Tempo %d (arquivo desordenado): %.6f segundos\n", i + 1, TempoAVL[i]) : printf("Tempo %d (arquivo ordenado): %.6f segundos\n", i + 1, TempoAVL[i]);
+    }
+
+    printf("\nTempos para Arvore Rubro-Negra:\n");
+    for (int i = 0; i < contadorRubroNegra; i++) {
+        (i == 0) ? printf("Tempo %d (arquivo desordenado): %.6f segundos\n", i + 1, TempoRubroNegra[i]) : printf("Tempo %d (arquivo ordenado): %.6f segundos\n", i + 1, TempoRubroNegra[i]);
+    }
+}
