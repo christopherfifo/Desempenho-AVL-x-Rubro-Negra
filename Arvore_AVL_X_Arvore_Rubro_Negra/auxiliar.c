@@ -141,7 +141,6 @@ int alimenta_arvore(int arvore, char *nome_arquivo) {
             break;
 
             case CRIANDO_ARVORE:
-                printf("\n Estamos criando o vetor ordenado!\n");
 
                 if (tamanho == capacidade) {
                     int nova_capacidade = capacidade * 2;

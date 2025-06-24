@@ -1,12 +1,10 @@
 # depslib dependency file v1.0
-1750723596 source:c:\users\aluno\desktop\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_avl.c
+1750724063 source:c:\users\aluno\desktop\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_avl.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
-	<sys/time.h>
 	"auxiliar.h"
 	"arvore_AVL.h"
-	"arvore_Rubro_Negra.h"
 
 1750723603 c:\users\aluno\desktop\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\auxiliar.h
 
@@ -14,12 +12,11 @@
 
 1750720365 c:\users\aluno\desktop\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_rubro_negra.h
 
-1750723163 source:c:\users\aluno\desktop\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_rubro_negra.c
+1750723836 source:c:\users\aluno\desktop\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_rubro_negra.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"auxiliar.h"
-	"arvore_AVL.h"
 	"arvore_Rubro_Negra.h"
 
 1750723588 source:c:\users\aluno\desktop\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\main.c
@@ -31,7 +28,7 @@
 	"arvore_AVL.h"
 	"arvore_Rubro_Negra.h"
 
-1750723794 source:c:\users\aluno\desktop\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\auxiliar.c
+1750724294 source:c:\users\aluno\desktop\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\auxiliar.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
