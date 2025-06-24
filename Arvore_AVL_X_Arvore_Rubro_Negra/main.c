@@ -17,7 +17,7 @@ int main()
     if (criando == NULL) {
         printf("Aquivo não existe\n");
         printf("\n Estamos criando o vetor ordenado!\n");
-        alimenta_arvore(CRIANDO_ARVORE, "massaDados.csv");
+        alimenta_arvore(CRIANDO_ARVORE, "massaDados.csv", 0);
     }
 
     printf("Hello world!\n");

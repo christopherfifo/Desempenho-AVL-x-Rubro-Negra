@@ -81,7 +81,7 @@ double calculaTempo(struct timeval tempoInicial, struct timeval tempoFinal)
  depois dessa arvore ele vai mandar o vetor para o algoritimo de ordenação que vai ordenar o vetor
   e depois vamos mandar para a função de criar arquivo csv.
 */
-int alimenta_arvore(int arvore, char *nome_arquivo) {
+int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
     FILE *arquivo = fopen(nome_arquivo, "r");
 
@@ -165,15 +165,22 @@ int alimenta_arvore(int arvore, char *nome_arquivo) {
     }
 
     gettimeofday(&fim, NULL);
+    double tempo = calculaTempo(inicio, fim);
+    printf("Tempo gasto para inserir na arvore: %.6f segundos\n", tempo);
 
     fclose(arquivo);
 
     if (!arquivo_ordenado_existe) {
         quickSort(vetor, 0, tamanho - 1);
         criar_csv_ordenado("funcionarios_ordenados.csv", vetor, tamanho);
+        return 0;
     }
 
     free(vetor);
+
+    if(arquivo_ordenado == 1){
+    alimenta_arvore(arvore, "FuncionariosOrdenados.csv", 1);
+    }
 
     return 0;
 }
