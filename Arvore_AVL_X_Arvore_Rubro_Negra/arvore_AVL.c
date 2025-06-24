@@ -5,7 +5,7 @@
 #include "arvore_AVL.h"
 
 typedef struct NO{
-    int info;
+    Funcionario info;
     int alt; // FB - altura da sub-arvore
     struct NO *esq;
     struct NO *dir;
@@ -45,7 +45,7 @@ int altura_arvAVL(arvAVL *raiz){
     }
 }
 
-int insere_arvAVL(arvAVL *raiz, int valor){
+int insere_arvAVL(arvAVL *raiz, Funcionario valor){
     int res;
 
     if(*raiz == NULL){
@@ -62,10 +62,10 @@ int insere_arvAVL(arvAVL *raiz, int valor){
     }
 
     struct NO *atual = *raiz;
-    if(valor < atual->info){
+    if(valor < atual->info.id){
         if((res = insere_arvAVL(&(atual->esq), valor)) == 1){
             if(fatorBalanceamento_NO(atual) >= 2){
-                if(valor < (*raiz)->esq->info){
+                if(valor < (*raiz)->esq->info.id){
                     rotacaoLL(raiz);
                 }else{
                 rotacaoLR(raiz);
@@ -73,10 +73,10 @@ int insere_arvAVL(arvAVL *raiz, int valor){
             }
         }
     } else{
-        if(valor > atual->info){
+        if(valor > atual->info.id){
             if((res = insere_arvAVL(&(atual->dir), valor)) == 1){
                 if(fatorBalanceamento_NO(atual) >= 2){
-                    if((*raiz)->dir->info < valor){
+                    if((*raiz)->dir->info.id < valor){
                         rotacaoRR(raiz);
                     }else{
                         rotacaoRL(raiz);
@@ -110,7 +110,7 @@ void preOrdem_arvAVL(arvAVL *raiz){
         return;
     }
     if(*raiz != NULL){
-        printf("\t%d\n", (*raiz)->info);
+        printf("\t%d\n", (*raiz)->info.id);
         preOrdem_arvAVL(&((*raiz)->esq));
         preOrdem_arvAVL(&((*raiz)->dir));
     }
@@ -123,7 +123,7 @@ void emOrdem_arvAVL(arvAVL *raiz){
     }
     if(*raiz != NULL){
         emOrdem_arvAVL(&((*raiz)->esq));
-        printf("\t%d\n", (*raiz)->info);
+        printf("\t%d\n", (*raiz)->info.id);
         emOrdem_arvAVL(&((*raiz)->dir));
     }
 }
@@ -135,18 +135,18 @@ void posOderm_arvAVL(arvAVL *raiz){
     if(*raiz != NULL){
         posOderm_arvAVL(&((*raiz)->esq));
         posOderm_arvAVL(&((*raiz)->dir));
-        printf("\t%d\n", (*raiz)->info);
+        printf("\t%d\n", (*raiz)->info.id);
     }
 }
 
 
-int remove_arvAVL(arvAVL *raiz, int valor){
+int remove_arvAVL(arvAVL *raiz, Funcionario valor){
     if(raiz == NULL){
         return 0;
     }
 
     int res;
-    if(valor < (*raiz)->info){
+    if(valor.id < (*raiz)->info.id){
         if((res = remove_arvAVL(&(*raiz)->esq, valor)) == 1){
             if(fatorBalanceamento_NO(*raiz) >= 2){
                 if(alt_no((*raiz)->dir->esq) <= alt_no((*raiz)->dir->dir)){
@@ -158,7 +158,7 @@ int remove_arvAVL(arvAVL *raiz, int valor){
         }
     }
 
-    if((*raiz)->info < valor){
+    if((*raiz)->info.id < valor){
         if((res = remove_arvAVL(&(*raiz)->dir, valor)) == 1){
             if(fatorBalanceamento_NO(*raiz) >= 2){
                 if(alt_no((*raiz)->esq->dir) <= alt_no((*raiz)->esq->esq)){
@@ -170,7 +170,7 @@ int remove_arvAVL(arvAVL *raiz, int valor){
         }
     }
 
-    if((*raiz)->info == valor){
+    if((*raiz)->info.id == valor){
         if(((*raiz)->esq == NULL) || (*raiz)->dir == NULL){
             struct NO *no_velho = *raiz;
             if((*raiz)->esq != NULL){
@@ -181,8 +181,8 @@ int remove_arvAVL(arvAVL *raiz, int valor){
             free(no_velho);
         }else{
             struct NO *temp = procuramenor((*raiz)->dir);
-            (*raiz)->info = temp->info;
-            remove_arvAVL((*raiz)->dir, (*raiz)->info);
+            (*raiz)->info.id = temp->info.id;
+            remove_arvAVL((*raiz)->dir, (*raiz)->info.id);
             if(fatorBalanceamento_NO(*raiz) >= 2){
                 if(alt_no((*raiz)->esq->dir) <= alt_no((*raiz)->esq->esq)){
                     rotacaoLL(raiz);
@@ -210,10 +210,10 @@ int consulta_arvAVL(arvAVL *raiz, int valor){
     }
     struct NO *atual = *raiz;
     while(atual != NULL){
-        if(valor == atual->info){
+        if(valor == atual->info.id){
             return 1;
         }
-        if(valor > atual->info){
+        if(valor > atual->info.id){
             atual = atual->dir;
         }else{
             atual = atual->esq;
