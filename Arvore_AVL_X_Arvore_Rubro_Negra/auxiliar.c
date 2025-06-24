@@ -8,9 +8,11 @@
 
 
 
-double TempoAVL[5];
-double TempoRubroNegra[5];
+double TempoAVL[4];
+double TempoRubroNegra[4];
 struct timeval inicio, fim;
+int contadorAVL = 0;
+int contadorRubroNegra = 0;
 
 void criar_csv_ordenado( char nome_arquivo_saida, Funcionario* vetor, int tamanho){
     FILE *arquivo = fopen(nome_arquivo_saida, "w");
@@ -93,6 +95,13 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
     int arquivo_ordenado_existe = (arvore == CRIANDO_ARVORE) ? 0 : 1;
 
+    if (contadorAVL > 4) {
+        contadorAVL = 0;
+    }
+    if (contadorRubroNegra > 4) {
+        contadorRubroNegra = 0;
+    }
+
     Funcionario func;
 
     char linha[256];
@@ -167,6 +176,14 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
     gettimeofday(&fim, NULL);
     double tempo = calculaTempo(inicio, fim);
     printf("Tempo gasto para inserir na arvore: %.6f segundos\n", tempo);
+
+    if (arvore == ARVORE_AVL) {
+        TempoAVL[contadorAVL] = tempo;
+        contadorAVL++;
+    } else if (arvore == ARVORE_RUBRO_NEGRA) {
+        TempoRubroNegra[contadorRubroNegra] = tempo;
+        contadorRubroNegra++;
+    }
 
     fclose(arquivo);
 
