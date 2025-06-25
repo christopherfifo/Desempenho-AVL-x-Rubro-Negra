@@ -109,11 +109,11 @@ void posOderm_arvoreLLRB(arvoreLLRB *raiz){
 }
 
 
-int remove_arvoreLLRB(arvoreLLRB *raiz, int valor){
-    if(consulta_arvoreLLRB(raiz, valor)){
+int remove_arvoreLLRB(arvoreLLRB *raiz, Funcionario valor){
+    if(consulta_arvoreLLRB(raiz, valor.id)){
         struct NO *H = *raiz;
 
-        *raiz = removeNO(H, valor);
+        *raiz = removeNO(H, valor.id);
         if(*raiz != NULL){
             (*raiz)->cor = BLACK; // A raiz sempre é preta
         }
@@ -302,7 +302,7 @@ struct NO *removeMenor(struct NO *H){
     if(H->esq == NULL){
         free(H);
         return NULL;
-    } 
+    }
 
     if(cor(H->esq) == BLACK && cor(H->esq->esq) == BLACK){
         H = move2EsqRed(H);
@@ -315,7 +315,7 @@ struct NO *removeMenor(struct NO *H){
 
 struct NO *procuraMenor(struct NO *atual){
     struct NO *no1 = atual;
-    
+
     struct NO *no2 = atual->esq;
     while(no2 != NULL){
         no1 = no2;

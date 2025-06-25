@@ -119,7 +119,7 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
          switch (arvore)
          {
-         case ARVORE_AVL:
+         case ARVORE_AVL: {
 
                 arvAVL *raiz = cria_arvAVL();
 
@@ -145,10 +145,11 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
                 } else {
                     printf("Erro ao inserir funcionario %s na arvore AVL.\n", func.nome);
                 }
+         }
 
             break;
 
-            case ARVORE_RUBRO_NEGRA:
+            case ARVORE_RUBRO_NEGRA: {
 
                 arvoreLLRB *raiz = cria_arvoreLLRB();
 
@@ -164,7 +165,7 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
                 }
 
                 if (insere_arvoreLLRB(raiz,func) == 0) {
-                   
+
                     gettimeofday(&fim, NULL);
                     double tempo = calculaTempo(inicio, fim);
                     printf("Tempo gasto para inserir na arvore: %.6f segundos\n", tempo);
@@ -175,6 +176,7 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
                 } else {
                     printf("Erro ao inserir funcionario %s na arvore Rubro-Negra.\n", func.nome);
                 }
+            }
             break;
 
             case CRIANDO_ARVORE:
@@ -203,7 +205,7 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
                 vetor[tamanho] = func;
                 tamanho++;
                 }
- 
+
             break;
 
          default:
@@ -228,7 +230,7 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 }
 
 void exibeTempos() {
-    
+
     printf("Tempos para Arvore AVL:\n");
     for (int i = 0; i < contadorAVL; i++) {
         (i == 0) ? printf("Tempo %d (arquivo desordenado): %.6f segundos\n", i + 1, TempoAVL[i]) : printf("Tempo %d (arquivo ordenado): %.6f segundos\n", i + 1, TempoAVL[i]);

@@ -182,7 +182,7 @@ int remove_arvAVL(arvAVL *raiz, Funcionario valor){
         }else{
             struct NO *temp = procuramenor((*raiz)->dir);
             (*raiz)->info.id = temp->info.id;
-            remove_arvAVL((*raiz)->dir, (*raiz)->info.id);
+            remove_arvAVL((*raiz)->dir, (*raiz)->info);
             if(fatorBalanceamento_NO(*raiz) >= 2){
                 if(alt_no((*raiz)->esq->dir) <= alt_no((*raiz)->esq->esq)){
                     rotacaoLL(raiz);
@@ -222,7 +222,7 @@ int consulta_arvAVL(arvAVL *raiz, int valor){
     return 0;
 }
 
-void libera_NO(struct NO *no){
+void libera_NOAVL(struct NO *no){
     if(no == NULL){
         return;
     }
@@ -237,7 +237,7 @@ void liberar_arvAVL(arvAVL *raiz){
     if(raiz == NULL){
         return;
     }
-    libera_NO(*raiz);
+    libera_NOAVL(*raiz);
     free(raiz);
 }
 

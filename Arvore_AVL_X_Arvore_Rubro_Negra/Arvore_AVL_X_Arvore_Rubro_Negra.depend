@@ -37,3 +37,39 @@
 	"arvore_AVL.h"
 	"arvore_Rubro_Negra.h"
 
+1750823595 source:c:\users\didiv\onedrive\documentos\dev\avl e flamengo\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_avl.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"auxiliar.h"
+	"arvore_AVL.h"
+
+1750823075 c:\users\didiv\onedrive\documentos\dev\avl e flamengo\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\auxiliar.h
+
+1750823075 c:\users\didiv\onedrive\documentos\dev\avl e flamengo\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_avl.h
+
+1750824823 source:c:\users\didiv\onedrive\documentos\dev\avl e flamengo\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_rubro_negra.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"auxiliar.h"
+	"arvore_Rubro_Negra.h"
+
+1750823075 c:\users\didiv\onedrive\documentos\dev\avl e flamengo\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_rubro_negra.h
+
+1750823075 source:c:\users\didiv\onedrive\documentos\dev\avl e flamengo\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\auxiliar.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<sys/time.h>
+	"auxiliar.h"
+	"arvore_AVL.h"
+	"arvore_Rubro_Negra.h"
+
+1750823075 source:c:\users\didiv\onedrive\documentos\dev\avl e flamengo\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<sys/time.h>
+	"auxiliar.h"
+
