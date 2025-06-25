@@ -8,7 +8,7 @@ int vazia_arvAVL(arvAVL *raiz);
 
 int altura_arvAVL(arvAVL *raiz);
 
-int insere_arvAVL(arvAVL *raiz, int valor);
+int insere_arvAVL(arvAVL *raiz, Funcionario valor);
 
 int totalNO_arvAVL(arvAVL *raiz);
 
@@ -18,7 +18,7 @@ void emOrdem_arvAVL(arvAVL *raiz);
 
 void posOderm_arvAVL(arvAVL *raiz);
 
-int remove_arvAVL(arvAVL *raiz, int valor);
+int remove_arvAVL(arvAVL *raiz, Funcionario valor);
 
 int consulta_arvAVL(arvAVL *raiz, int valor);
 

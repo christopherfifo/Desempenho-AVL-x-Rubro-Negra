@@ -62,10 +62,10 @@ int insere_arvAVL(arvAVL *raiz, Funcionario valor){
     }
 
     struct NO *atual = *raiz;
-    if(valor < atual->info.id){
+    if(valor.id < atual->info.id){
         if((res = insere_arvAVL(&(atual->esq), valor)) == 1){
             if(fatorBalanceamento_NO(atual) >= 2){
-                if(valor < (*raiz)->esq->info.id){
+                if(valor.id < (*raiz)->esq->info.id){
                     rotacaoLL(raiz);
                 }else{
                 rotacaoLR(raiz);
@@ -73,10 +73,10 @@ int insere_arvAVL(arvAVL *raiz, Funcionario valor){
             }
         }
     } else{
-        if(valor > atual->info.id){
+        if(valor.id > atual->info.id){
             if((res = insere_arvAVL(&(atual->dir), valor)) == 1){
                 if(fatorBalanceamento_NO(atual) >= 2){
-                    if((*raiz)->dir->info.id < valor){
+                    if((*raiz)->dir->info.id < valor.id){
                         rotacaoRR(raiz);
                     }else{
                         rotacaoRL(raiz);
@@ -158,7 +158,7 @@ int remove_arvAVL(arvAVL *raiz, Funcionario valor){
         }
     }
 
-    if((*raiz)->info.id < valor){
+    if((*raiz)->info.id < valor.id){
         if((res = remove_arvAVL(&(*raiz)->dir, valor)) == 1){
             if(fatorBalanceamento_NO(*raiz) >= 2){
                 if(alt_no((*raiz)->esq->dir) <= alt_no((*raiz)->esq->esq)){
@@ -170,7 +170,7 @@ int remove_arvAVL(arvAVL *raiz, Funcionario valor){
         }
     }
 
-    if((*raiz)->info.id == valor){
+    if((*raiz)->info.id == valor.id){
         if(((*raiz)->esq == NULL) || (*raiz)->dir == NULL){
             struct NO *no_velho = *raiz;
             if((*raiz)->esq != NULL){

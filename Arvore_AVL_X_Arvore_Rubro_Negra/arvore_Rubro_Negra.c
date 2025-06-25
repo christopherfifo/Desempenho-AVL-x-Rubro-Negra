@@ -49,10 +49,10 @@ int altura_arvoreLLRB(arvoreLLRB *raiz){
     }
 }
 
-int insere_arvoreLLRB(arvoreLLRB *raiz, int valor){
+int insere_arvoreLLRB(arvoreLLRB *raiz, Funcionario valor){
     int resp;
 
-    *raiz =  insereNO(*raiz, valor, &resp);
+    *raiz =  insereNO(*raiz, valor.id, &resp);
     if(*raiz != NULL){
         (*raiz)->cor = BLACK; // A raiz sempre é preta
     }

@@ -133,7 +133,7 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
                     strcpy(func.dpto, strtok(NULL, ";"));
                     func.sal = atof(strtok(NULL, "\n"));
                 }
-                if (insere_arvAVL(raiz,func) == 0) {
+                if (insere_arvAVL(raiz, func) == 0) {
 
                     gettimeofday(&fim, NULL);
                     double tempo = calculaTempo(inicio, fim);
