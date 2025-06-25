@@ -87,16 +87,15 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo\n");
-        fclose(arquivo);
         return 1;
     }
 
     int arquivo_ordenado_existe = (arvore == CRIANDO_ARVORE) ? 0 : 1;
 
-    if (contadorAVL > 2) {
+    if (contadorAVL >= 2) {
         contadorAVL = 0;
     }
-    if (contadorRubroNegra > 2) {
+    if (contadorRubroNegra >= 2) {
         contadorRubroNegra = 0;
     }
 
@@ -110,12 +109,6 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
     int tamanho = 0;
     int capacidade = 1000;
 
-    vetor = malloc(capacidade * sizeof(Funcionario));
-    if (vetor == NULL) {
-        printf("Erro ao alocar memória inicial para o vetor.\n");
-        fclose(arquivo);
-        return 1;
-    }
 
          switch (arvore)
          {
@@ -132,19 +125,21 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
                     strcpy(func.empresa, strtok(NULL, ";"));
                     strcpy(func.dpto, strtok(NULL, ";"));
                     func.sal = atof(strtok(NULL, "\n"));
+
+                    if (insere_arvAVL(raiz, func) == 0) {
+                        printf("Erro ao inserir funcionario %s na arvore AVL.\n", func.nome);
+                    }
+
                 }
-                if (insere_arvAVL(raiz, func) == 0) {
 
                     gettimeofday(&fim, NULL);
                     double tempo = calculaTempo(inicio, fim);
-                    printf("Tempo gasto para inserir na arvore: %.6f segundos\n", tempo);
+                    printf("Tempo gasto para inserir na arvore AVL: %.6f segundos\n", tempo);
 
                     TempoAVL[contadorAVL] = tempo;
                     contadorAVL++;
 
-                } else {
-                    printf("Erro ao inserir funcionario %s na arvore AVL.\n", func.nome);
-                }
+                    liberar_arvAVL(raiz);
          }
 
             break;
@@ -162,24 +157,33 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
                     strcpy(func.empresa, strtok(NULL, ";"));
                     strcpy(func.dpto, strtok(NULL, ";"));
                     func.sal = atof(strtok(NULL, "\n"));
-                }
 
-                if (insere_arvoreLLRB(raiz,func) == 0) {
+                    if (insere_arvoreLLRB(raiz, func) == 0) {
+                        printf("Erro ao inserir funcionario %s na arvore Rubro-Negra.\n", func.nome);
+                    }
+
+                }
 
                     gettimeofday(&fim, NULL);
                     double tempo = calculaTempo(inicio, fim);
-                    printf("Tempo gasto para inserir na arvore: %.6f segundos\n", tempo);
+                    printf("Tempo gasto para inserir na arvore Rubro Negra: %.6f segundos\n", tempo);
 
                     TempoRubroNegra[contadorRubroNegra] = tempo;
                     contadorRubroNegra++;
 
-                } else {
-                    printf("Erro ao inserir funcionario %s na arvore Rubro-Negra.\n", func.nome);
-                }
+                    liberar_arvoreLLRB(raiz);
             }
             break;
 
             case CRIANDO_ARVORE:
+
+                vetor = malloc(capacidade * sizeof(Funcionario));
+                if (vetor == NULL) {
+                    printf("Erro ao alocar memória inicial para o vetor.\n");
+                    fclose(arquivo);
+                    return 1;
+                }
+
                 while (fgets(linha, sizeof(linha), arquivo) != NULL) {
 
                     func.id = atoi(strtok(linha, ";"));
@@ -206,6 +210,10 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
                 tamanho++;
                 }
 
+                quickSort(vetor, 0, tamanho - 1);
+                criar_csv_ordenado("funcionarios_ordenados.csv", vetor, tamanho);
+                free(vetor);
+
             break;
 
          default:
@@ -214,16 +222,8 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
     fclose(arquivo);
 
-    if (!arquivo_ordenado_existe) {
-        quickSort(vetor, 0, tamanho - 1);
-        criar_csv_ordenado("funcionarios_ordenados.csv", vetor, tamanho);
-        return 0;
-    }
-
-    free(vetor);
-
-    if(arquivo_ordenado == 1){
-    alimenta_arvore(arvore, "FuncionariosOrdenados.csv", 0);
+    if (arquivo_ordenado == 1 && arvore != CRIANDO_ARVORE) {
+        alimenta_arvore(arvore, "funcionarios_ordenados.csv", 0);
     }
 
     return 0;
@@ -231,13 +231,25 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
 void exibeTempos() {
 
-    printf("Tempos para Arvore AVL:\n");
-    for (int i = 0; i < contadorAVL; i++) {
-        (i == 0) ? printf("Tempo %d (arquivo desordenado): %.6f segundos\n", i + 1, TempoAVL[i]) : printf("Tempo %d (arquivo ordenado): %.6f segundos\n", i + 1, TempoAVL[i]);
+    printf("\n=== RESULTADOS DOS TEMPOS ===\n");
+    
+    if (contadorAVL > 0) {
+        printf("Tempos para Arvore AVL:\n");
+        for (int i = 0; i < contadorAVL; i++) {
+            (i == 0) ? printf("Tempo %d (arquivo desordenado): %.6f segundos\n", i + 1, TempoAVL[i]) : printf("Tempo %d (arquivo ordenado): %.6f segundos\n", i + 1, TempoAVL[i]);
+        }
+    } else {
+        printf("Nenhum tempo foi registrado para a Arvore AVL.\n");
     }
 
-    printf("\nTempos para Arvore Rubro-Negra:\n");
-    for (int i = 0; i < contadorRubroNegra; i++) {
-        (i == 0) ? printf("Tempo %d (arquivo desordenado): %.6f segundos\n", i + 1, TempoRubroNegra[i]) : printf("Tempo %d (arquivo ordenado): %.6f segundos\n", i + 1, TempoRubroNegra[i]);
+    if (contadorRubroNegra > 0) {
+        printf("\nTempos para Arvore Rubro-Negra:\n");
+        for (int i = 0; i < contadorRubroNegra; i++) {
+            (i == 0) ? printf("Tempo %d (arquivo desordenado): %.6f segundos\n", i + 1, TempoRubroNegra[i]) : printf("Tempo %d (arquivo ordenado): %.6f segundos\n", i + 1, TempoRubroNegra[i]);
+        }
+    } else {
+        printf("Nenhum tempo foi registrado para a Arvore Rubro-Negra.\n");
     }
+    
+    printf("==============================\n");
 }
