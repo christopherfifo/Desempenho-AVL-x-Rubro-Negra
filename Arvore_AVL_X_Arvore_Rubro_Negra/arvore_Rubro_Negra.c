@@ -9,11 +9,11 @@
 #define BLACK 0
 
 typedef struct NO{
-    int info;
+    Funcionario dados_func;   
     struct NO *esq;
     struct NO *dir;
     int cor;
-};
+} NO;
 
 arvoreLLRB *cria_arvoreLLRB(){
     arvoreLLRB *raiz = (arvoreLLRB*) malloc(sizeof(arvoreLLRB));
@@ -52,7 +52,7 @@ int altura_arvoreLLRB(arvoreLLRB *raiz){
 int insere_arvoreLLRB(arvoreLLRB *raiz, Funcionario valor){
     int resp;
 
-    *raiz =  insereNO(*raiz, valor.id, &resp);
+    *raiz =  insereNO(*raiz, valor, &resp);
     if(*raiz != NULL){
         (*raiz)->cor = BLACK; // A raiz sempre é preta
     }
@@ -77,7 +77,7 @@ void preOrdem_arvoreLLRB(arvoreLLRB *raiz){
         return;
     }
     if(*raiz != NULL){
-        printf("\t%d\n", (*raiz)->info);
+        printf("\t%d\n", (*raiz)->dados_func.id);
         preOrdem_arvoreLLRB(&((*raiz)->esq));
         preOrdem_arvoreLLRB(&((*raiz)->dir));
     }
@@ -90,7 +90,7 @@ void emOrdem_arvoreLLRB(arvoreLLRB *raiz){
     }
     if(*raiz != NULL){
         emOrdem_arvoreLLRB(&((*raiz)->esq));
-        printf("\t%d\n", (*raiz)->info);
+        printf("\t%d\n", (*raiz)->dados_func.id);
         emOrdem_arvoreLLRB(&((*raiz)->dir));
     }
 }
@@ -104,7 +104,7 @@ void posOderm_arvoreLLRB(arvoreLLRB *raiz){
     if(*raiz != NULL){
         posOderm_arvoreLLRB(&((*raiz)->esq));
         posOderm_arvoreLLRB(&((*raiz)->dir));
-        printf("\t%d\n", (*raiz)->info);
+        printf("\t%d\n", (*raiz)->dados_func.id);
     }
 }
 
@@ -131,10 +131,10 @@ int consulta_arvoreLLRB(arvoreLLRB *raiz, int valor){
     }
     struct NO *atual = *raiz;
     while(atual != NULL){
-        if(valor == atual->info){
+        if(valor == atual->dados_func.id){
             return 1;
         }
-        if(valor > atual->info){
+        if(valor > atual->dados_func.id){
             atual = atual->dir;
         }else{
             atual = atual->esq;
@@ -143,12 +143,12 @@ int consulta_arvoreLLRB(arvoreLLRB *raiz, int valor){
     return 0;
 }
 
-void libera_NO(struct NO *no){
+void libera_NORU(struct NO *no){
     if(no == NULL){
         return;
     }
-    libera_NO(no->esq);
-    libera_NO(no->dir);
+    libera_NORU(no->esq);
+    libera_NORU(no->dir);
     free(no);
     no = NULL;
 }
@@ -158,7 +158,7 @@ void liberar_arvoreLLRB(arvoreLLRB *raiz){
     if(raiz == NULL){
         return;
     }
-    libera_NO(*raiz);
+    libera_NORU(*raiz);
     free(raiz);
 }
 
@@ -230,14 +230,14 @@ struct NO *balancear(struct NO *H){
     return H;
 }
 
-struct NO *insereNO(struct NO *H, int valor, int *resp){
+struct NO *insereNO(struct NO *H, Funcionario valor, int *resp){
     if(H == NULL){
         struct NO *novo = (struct NO*) malloc(sizeof(struct NO));
         if(novo == NULL){
             *resp = 0; // Falha ao alocar memória
             return NULL;
         }
-        novo->info = valor;
+        novo->dados_func = valor;
         novo->cor = RED; // Novo nó é vermelho
         novo->dir = NULL;
         novo->esq = NULL;
@@ -245,10 +245,10 @@ struct NO *insereNO(struct NO *H, int valor, int *resp){
         return novo;
     }
 
-    if(valor == H->info){
+    if(valor.id == H->dados_func.id){
         *resp = 0;
     } else {
-        if(valor < H->info){
+        if(valor.id < H->dados_func.id){
             H->esq = insereNO(H->esq, valor, resp);
         } else {
             H->dir = insereNO(H->dir, valor, resp);
@@ -271,7 +271,7 @@ struct NO *insereNO(struct NO *H, int valor, int *resp){
 }
 
 struct NO *removeNO(struct NO *H, int valor){
-    if(valor < H->info){
+    if(valor < H->dados_func.id){
         if(cor(H->esq) == BLACK && cor(H->esq->esq) == BLACK){
             H = move2EsqRed(H);
         }
@@ -280,16 +280,20 @@ struct NO *removeNO(struct NO *H, int valor){
         if(cor(H->esq) == RED){
             H = rotacionaDireita(H);
         }
-        if(valor == H->info && (H->dir == NULL)){
+        if(valor == H->dados_func.id && (H->dir == NULL)){
             free(H);
             return NULL;
         }
         if(cor(H->dir) == BLACK && cor(H->dir->esq) == BLACK){
             H = move2DirRed(H);
         }
-        if(valor == H->info){
-            struct NO *x = procuraMenor(H->dir);
-            H->info = x->info;
+        if(valor == H->dados_func.id){ 
+            if (H->dir == NULL) {
+                free(H);
+                return NULL;
+            }
+            NO *x = procuraMenor(H->dir);
+            H->dados_func = x->dados_func; 
             H->dir = removeMenor(H->dir);
         } else {
             H->dir = removeNO(H->dir, valor);
@@ -308,7 +312,7 @@ struct NO *removeMenor(struct NO *H){
         H = move2EsqRed(H);
     }
 
-    H->esq = procuraMenor(H->esq);
+    H->esq = removeMenor(H->esq);
 
     return balancear(H);
 }

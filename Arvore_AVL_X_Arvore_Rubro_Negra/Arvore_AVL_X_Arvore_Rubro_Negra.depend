@@ -73,7 +73,7 @@
 	<sys/time.h>
 	"auxiliar.h"
 
-1750876243 source:c:\users\user\desktop\programing\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_avl.c
+1750905997 source:c:\users\user\desktop\programing\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_avl.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -82,25 +82,25 @@
 
 1750795209 c:\users\user\desktop\programing\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\auxiliar.h
 
-1750809468 c:\users\user\desktop\programing\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_avl.h
+1750906196 c:\users\user\desktop\programing\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_avl.h
 
-1750876243 source:c:\users\user\desktop\programing\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_rubro_negra.c
+1750905058 source:c:\users\user\desktop\programing\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_rubro_negra.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"auxiliar.h"
 	"arvore_Rubro_Negra.h"
 
-1750809503 c:\users\user\desktop\programing\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_rubro_negra.h
+1750906044 c:\users\user\desktop\programing\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\arvore_rubro_negra.h
 
-1750877978 source:c:\users\user\desktop\programing\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\main.c
+1750903513 source:c:\users\user\desktop\programing\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<sys/time.h>
 	"auxiliar.h"
 
-1750878262 source:c:\users\user\desktop\programing\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\auxiliar.c
+1750905964 source:c:\users\user\desktop\programing\desempenho-avl-x-rubro-negra\arvore_avl_x_arvore_rubro_negra\auxiliar.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

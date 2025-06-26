@@ -1,4 +1,4 @@
-#include "auxiliar.h"
+
 
 typedef struct NO *arvoreLLRB;
 
@@ -24,7 +24,7 @@ int consulta_arvoreLLRB(arvoreLLRB *raiz, int valor);
 
 void liberar_arvoreLLRB(arvoreLLRB *raiz);
 
-struct NO *insereNO(struct NO *H, int valor, int *resp);
+struct NO *insereNO(struct NO *H, Funcionario valor, int *resp);
 
 struct NO *removeNO(struct NO *H, int valor);
 

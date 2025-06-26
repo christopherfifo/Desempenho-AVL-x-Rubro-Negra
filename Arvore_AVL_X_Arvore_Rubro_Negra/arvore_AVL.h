@@ -1,4 +1,4 @@
-#include "auxiliar.h"
+
 
 typedef struct NO *arvAVL;
 
@@ -20,7 +20,7 @@ void emOrdem_arvAVL(arvAVL *raiz);
 
 void posOderm_arvAVL(arvAVL *raiz);
 
-int remove_arvAVL(arvAVL *raiz, Funcionario valor);
+int remove_arvAVL(arvAVL *raiz, int valor);
 
 int consulta_arvAVL(arvAVL *raiz, int valor);
 
