@@ -68,7 +68,7 @@ double calculaTempo(struct timeval tempoInicial, struct timeval tempoFinal)
     return fim - inicio;
 }
 
-int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
+int alimenta_arvore(int arvore, char *nome_arquivo) {
 
     FILE *arquivo = fopen(nome_arquivo, "r");
 
@@ -76,8 +76,6 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
         printf("Erro ao abrir o arquivo\n");
         return 1;
     }
-
-    int arquivo_ordenado_existe = (arvore == CRIANDO_ARVORE) ? 0 : 1;
 
     Funcionario func;
 
@@ -92,11 +90,7 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
          switch (arvore)
          {
-         case ARVORE_AVL: {
-
-                if (contadorAVL >= 2) {
-                    contadorAVL = 0;
-                }                
+         case ARVORE_AVL: {               
 
                 arvAVL *raiz = cria_arvAVL();
 
@@ -120,19 +114,20 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
                     double tempo = calculaTempo(inicio, fim);
                     printf("Tempo gasto para inserir na arvore AVL: %.6f segundos\n", tempo);
 
-                    TempoAVL[contadorAVL] = tempo;
-                    contadorAVL++;
-
+                    if(strcmp(nome_arquivo, "funcionarios_ordenados.csv") == 0) {
+                        TempoAVL[1] = tempo;
+                        contadorAVL = 2;
+                    } else {
+                        TempoAVL[0] = tempo;
+                        contadorAVL = (contadorAVL < 1) ? 1 : contadorAVL;
+                    }
+                    
                     liberar_arvAVL(raiz);
          }
 
             break;
 
             case ARVORE_RUBRO_NEGRA: {
-
-                if (contadorRubroNegra >= 2) {
-                    contadorRubroNegra = 0;
-                }
 
                 arvoreLLRB *raiz = cria_arvoreLLRB();
 
@@ -156,9 +151,14 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
                     double tempo = calculaTempo(inicio, fim);
                     printf("Tempo gasto para inserir na arvore Rubro Negra: %.6f segundos\n", tempo);
 
-                    TempoRubroNegra[contadorRubroNegra] = tempo;
-                    contadorRubroNegra++;
-
+                    if(strcmp(nome_arquivo, "funcionarios_ordenados.csv") == 0) {
+                        TempoRubroNegra[1] = tempo;
+                        contadorRubroNegra = 2;
+                    } else {
+                        TempoRubroNegra[0] = tempo;
+                        contadorRubroNegra = (contadorRubroNegra < 1) ? 1 : contadorRubroNegra;
+                    }
+                
                     liberar_arvoreLLRB(raiz);
             }
             break;
@@ -209,10 +209,6 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
          }
 
     fclose(arquivo);
-
-    if (arquivo_ordenado == 1 && arvore != CRIANDO_ARVORE) {
-        alimenta_arvore(arvore, "funcionarios_ordenados.csv", 0);
-    }
 
     return 0;
 }
