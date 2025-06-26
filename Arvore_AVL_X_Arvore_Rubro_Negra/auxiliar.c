@@ -112,15 +112,20 @@ int alimenta_arvore(int arvore, char *nome_arquivo) {
 
                     gettimeofday(&fim, NULL);
                     double tempo = calculaTempo(inicio, fim);
-                    printf("Tempo gasto para inserir na arvore AVL: %.6f segundos\n", tempo);
 
                     if(strcmp(nome_arquivo, "funcionarios_ordenados.csv") == 0) {
+                        printf("Tempo gasto para inserir na arvore AVL (arquivo ordenado): %.6f segundos\n", tempo);
+
                         TempoAVL[1] = tempo;
                         contadorAVL = 2;
+
                     } else {
+                        printf("Tempo gasto para inserir na arvore AVL (arquivo desordenado): %.6f segundos\n", tempo);
+
                         TempoAVL[0] = tempo;
                         contadorAVL = (contadorAVL < 1) ? 1 : contadorAVL;
                     }
+
                     
                     liberar_arvAVL(raiz);
          }
@@ -149,14 +154,18 @@ int alimenta_arvore(int arvore, char *nome_arquivo) {
 
                     gettimeofday(&fim, NULL);
                     double tempo = calculaTempo(inicio, fim);
-                    printf("Tempo gasto para inserir na arvore Rubro Negra: %.6f segundos\n", tempo);
-
                     if(strcmp(nome_arquivo, "funcionarios_ordenados.csv") == 0) {
+                        printf("Tempo gasto para inserir na arvore Rubro-Negra (arquivo ordenado): %.6f segundos\n", tempo);
+
                         TempoRubroNegra[1] = tempo;
                         contadorRubroNegra = 2;
+
                     } else {
+                        printf("Tempo gasto para inserir na arvore Rubro-Negra (arquivo desordenado): %.6f segundos\n", tempo);
+                    
                         TempoRubroNegra[0] = tempo;
                         contadorRubroNegra = (contadorRubroNegra < 1) ? 1 : contadorRubroNegra;
+                        
                     }
                 
                     liberar_arvoreLLRB(raiz);

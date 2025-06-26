@@ -27,8 +27,8 @@ int main()
 
     printf("\nIniciando o programa...\n\n");
     alimenta_arvore(ARVORE_AVL, "massaDados.csv", 1);
-    alimenta_arvore(ARVORE_AVL, "funcionarios_ordenados.csv", 1);
     alimenta_arvore(ARVORE_RUBRO_NEGRA, "massaDados.csv", 1);
+    alimenta_arvore(ARVORE_AVL, "funcionarios_ordenados.csv", 1);
     alimenta_arvore(ARVORE_RUBRO_NEGRA, "funcionarios_ordenados.csv", 1);
 
     exibeTempos();
