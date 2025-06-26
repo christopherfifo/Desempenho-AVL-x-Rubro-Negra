@@ -92,13 +92,6 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
     int arquivo_ordenado_existe = (arvore == CRIANDO_ARVORE) ? 0 : 1;
 
-    if (contadorAVL >= 2) {
-        contadorAVL = 0;
-    }
-    if (contadorRubroNegra >= 2) {
-        contadorRubroNegra = 0;
-    }
-
     Funcionario func;
 
     char linha[256];
@@ -113,6 +106,10 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
          switch (arvore)
          {
          case ARVORE_AVL: {
+
+                if (contadorAVL >= 2) {
+                    contadorAVL = 0;
+                }                
 
                 arvAVL *raiz = cria_arvAVL();
 
@@ -145,6 +142,10 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
             break;
 
             case ARVORE_RUBRO_NEGRA: {
+
+                if (contadorRubroNegra >= 2) {
+                    contadorRubroNegra = 0;
+                }
 
                 arvoreLLRB *raiz = cria_arvoreLLRB();
 
@@ -231,7 +232,7 @@ int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
 void exibeTempos() {
 
-    printf("\n=== RESULTADOS DOS TEMPOS ===\n");
+    printf("\n\n======= RESULTADOS DOS TEMPOS =======\n\n");
     
     if (contadorAVL > 0) {
         printf("Tempos para Arvore AVL:\n");
@@ -251,5 +252,5 @@ void exibeTempos() {
         printf("Nenhum tempo foi registrado para a Arvore Rubro-Negra.\n");
     }
     
-    printf("==============================\n");
+    printf("\n=====================================\n");
 }

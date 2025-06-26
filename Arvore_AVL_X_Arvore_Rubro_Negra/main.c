@@ -9,28 +9,27 @@ int main()
 {
     FILE *arquivo = fopen("massaDados.csv", "r");
     if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo\n");
+        printf("\nErro ao abrir o arquivo\n\n");
         exit(1);
     }
     fclose(arquivo);
 
     FILE *criando = fopen("funcionarios_ordenados.csv", "r");
     if (criando == NULL) {
-        printf("Aquivo não existe\n");
-        printf("\n Estamos criando o vetor ordenado!\n");
+        printf("Aquivo nao existe\n");
+        printf("\nEstamos criando o vetor ordenado!\n\n");
         alimenta_arvore(CRIANDO_ARVORE, "massaDados.csv", 0);
     } else {
-        printf("Arquivo já existe!\n");
+        printf("Arquivo ja existe!\n");
         fclose(criando);
     }
 
 
-    printf("Iniciando o programa...\n");
+    printf("\nIniciando o programa...\n\n");
     alimenta_arvore(ARVORE_AVL, "massaDados.csv", 1);
     alimenta_arvore(ARVORE_RUBRO_NEGRA, "massaDados.csv", 1);
 
     exibeTempos();
 
-    printf("Hello world!\n");
     return 0;
 }
