@@ -1,1 +1,1 @@
-void iniciar_menu(void);
+void iniciar_menu();
