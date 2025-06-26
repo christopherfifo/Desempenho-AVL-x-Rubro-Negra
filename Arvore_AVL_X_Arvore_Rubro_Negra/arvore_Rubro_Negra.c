@@ -54,7 +54,7 @@ int insere_arvoreLLRB(arvoreLLRB *raiz, Funcionario valor){
 
     *raiz =  insereNO(*raiz, valor, &resp);
     if(*raiz != NULL){
-        (*raiz)->cor = BLACK; // A raiz sempre é preta
+        (*raiz)->cor = BLACK;
     }
     return resp;
 }
@@ -115,12 +115,12 @@ int remove_arvoreLLRB(arvoreLLRB *raiz, Funcionario valor){
 
         *raiz = removeNO(H, valor.id);
         if(*raiz != NULL){
-            (*raiz)->cor = BLACK; // A raiz sempre é preta
+            (*raiz)->cor = BLACK;
         }
 
-        return 1; // Remoção bem-sucedida
+        return 1;
     } else {
-        return 0; // Valor não encontrado
+        return 0;
     }
 }
 
@@ -234,14 +234,14 @@ struct NO *insereNO(struct NO *H, Funcionario valor, int *resp){
     if(H == NULL){
         struct NO *novo = (struct NO*) malloc(sizeof(struct NO));
         if(novo == NULL){
-            *resp = 0; // Falha ao alocar memória
+            *resp = 0; 
             return NULL;
         }
         novo->dados_func = valor;
-        novo->cor = RED; // Novo nó é vermelho
+        novo->cor = RED;
         novo->dir = NULL;
         novo->esq = NULL;
-        *resp = 1; // Inserção bem-sucedida
+        *resp = 1;
         return novo;
     }
 

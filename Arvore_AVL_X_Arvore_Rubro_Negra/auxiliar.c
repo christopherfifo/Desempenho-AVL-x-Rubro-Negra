@@ -29,14 +29,6 @@ void criar_csv_ordenado( const char *nome_arquivo_saida, Funcionario* vetor, int
     printf("Arquivo '%s' criado com sucesso!\n", nome_arquivo_saida);
 }
 
-
-void swap(int *a, int *b)
-{
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
 void troca(Funcionario *a, Funcionario *b)
 {
     Funcionario temp = *a;
@@ -76,11 +68,6 @@ double calculaTempo(struct timeval tempoInicial, struct timeval tempoFinal)
     return fim - inicio;
 }
 
-/* aqui ele vai ler o arquivo, mandar para a função token que vai mandar para a struct
- que ela vai mandar essa struct para a arvore e depois para um vetor,
- depois dessa arvore ele vai mandar o vetor para o algoritimo de ordenação que vai ordenar o vetor
-  e depois vamos mandar para a função de criar arquivo csv.
-*/
 int alimenta_arvore(int arvore, char *nome_arquivo, int arquivo_ordenado) {
 
     FILE *arquivo = fopen(nome_arquivo, "r");

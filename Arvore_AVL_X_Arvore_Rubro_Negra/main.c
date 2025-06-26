@@ -20,7 +20,7 @@ int main()
         printf("\nEstamos criando o vetor ordenado!\n\n");
         alimenta_arvore(CRIANDO_ARVORE, "massaDados.csv", 0);
     } else {
-        printf("Arquivo ja existe!\n");
+        printf("Arquivo funcionarios_ordenados.csv ja existe!\n");
         fclose(criando);
     }
 

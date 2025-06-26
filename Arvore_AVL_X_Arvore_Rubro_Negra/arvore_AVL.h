@@ -1,5 +1,3 @@
-
-
 typedef struct NO *arvAVL;
 
 arvAVL *cria_arvAVL();

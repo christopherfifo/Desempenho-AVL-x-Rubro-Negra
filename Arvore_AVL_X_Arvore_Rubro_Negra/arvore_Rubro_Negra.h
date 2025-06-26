@@ -1,5 +1,3 @@
-
-
 typedef struct NO *arvoreLLRB;
 
 arvoreLLRB *cria_arvoreLLRB();
